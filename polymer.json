@@ -1,0 +1,11 @@
+{
+  "entrypoint": "index.html",
+  "shell": "src/kc-app/kc-app.html",
+  "sources": [
+    "bower.json",
+    "manifest.json"
+  ],
+  "includeDependencies": [
+    "bower_components/webcomponentsjs/webcomponents-lite.min.js"
+  ]
+}

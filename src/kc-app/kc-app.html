@@ -1,0 +1,45 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="kc-clock.html">
+<link rel="import" href="kc-weather.html">
+<dom-module id="kc-app">
+  <template>
+    <style include="iron-flex">
+      :host {
+        @apply(--layout-horizontal);
+        height: 100vh;
+        background: linear-gradient(#F4CD8B, #E7A365);
+        color: #333;
+      }
+    </style>
+
+    <kc-clock class="flex layout vertical center center-justified" time="{{time}}" hour="{{hour}}" minutes="{{minutes}}" date="{{currentDateString}}"></kc-clock>
+    <kc-weather class="flex layout vertical center center-justified" id="weather" state="NC" city="Apex" current-date-string="{{currentDateString}}"></kc-weather>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'kc-app',
+
+      properties: {
+        updateInterval: {
+          type: Number,
+          value: 10
+        },
+        time: String,
+        hour: String,
+        minutes: {
+          type: String,
+          observer: '_minutesChanged'
+        }
+      },
+
+      _minutesChanged: function (minutes) {
+        if (minutes % this.updateInterval === 0) {
+          this.$.weather.getCurrentConditions();
+        }
+      }
+    });
+  </script>
+</dom-module>

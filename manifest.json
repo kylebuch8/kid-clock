@@ -1,0 +1,6 @@
+{
+  "name": "Kid Clock",
+  "short_name": "Kid Clock",
+  "start_url": "/",
+  "display": "standalone"
+}

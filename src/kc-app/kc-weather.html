@@ -1,0 +1,71 @@
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+
+<dom-module id="kc-weather">
+  <template>
+    <style include="iron-flex">
+      :host {
+        display: block;
+        font-family: 'Varela Round', sans-serif;
+      }
+
+      .large {
+        font-size: 60px;
+      }
+    </style>
+
+    <div>Current</div>
+    <div>[[currentObservation.weather]]</div>
+    <div class="large">[[currentTemperature]]&deg;</div>
+    <div>Forecast</div>
+    <div>[[forecast.simpleforecast.forecastday.0.conditions]]</div>
+    <div class="layout horizontal">
+      <div>High: [[forecast.simpleforecast.forecastday.0.high.fahrenheit]]&deg;</div>
+      <div>Low: [[forecast.simpleforecast.forecastday.0.low.fahrenheit]]&deg;</div>
+    </div>
+  </template>
+  <script>
+    Polymer({
+      is: 'kc-weather',
+
+      properties: {
+        state: String,
+        city: String,
+        apiUrl: {
+          type: String,
+          value: 'http://api.wunderground.com/api/237c499a64ba2cec/'
+        },
+        currentObservation: Object,
+        forecast: Object,
+        currentTemperature: Number,
+        currentDateString: {
+          type: String,
+          notify: true
+        }
+      },
+
+      ready: function () {
+        this.getCurrentConditions();
+      },
+
+      getCurrentConditions: function () {
+        var that = this;
+        var url = this.apiUrl + '/conditions/forecast/astronomy/q/' + this.state + '/'+ this.city + '.json';
+
+        fetch(url)
+          .then(function (res) {
+            return res.json()
+          })
+          .then(function (data) {
+            that.currentObservation = data.current_observation;
+            that.currentTemperature = parseInt(that.currentObservation.temp_f, 10);
+            that.forecast = data.forecast;
+            that.currentDateString = data.forecast.simpleforecast.forecastday[0].date.weekday + ', ' +
+                                     data.forecast.simpleforecast.forecastday[0].date.monthname + ' ' +
+                                     data.forecast.simpleforecast.forecastday[0].date.day + ', ' +
+                                     data.forecast.simpleforecast.forecastday[0].date.year;
+          })
+          .catch(function (err) {});
+      }
+    });
+  </script>
+</dom-module>

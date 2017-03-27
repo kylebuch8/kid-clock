@@ -1,0 +1,61 @@
+<dom-module id="kc-clock">
+  <template>
+    <style>
+      :host {
+        display: block;
+        font-family: 'Varela Round', sans-serif;
+      }
+
+      .time {
+        font-size: 120px;
+      }
+    </style>
+
+    <div class="time">[[time]]</div>
+    <div>[[date]]</div>
+  </template>
+  <script>
+    Polymer({
+      is: 'kc-clock',
+
+      properties: {
+        time: {
+          type: String,
+          notify: true
+        },
+        hour: {
+          type: String,
+          notify: true
+        },
+        minutes: {
+          type: String,
+          notify: true
+        },
+        date: String
+      },
+
+      ready: function () {
+        this._updateClock = this._updateClock.bind(this);
+        requestAnimationFrame(this._updateClock);
+      },
+
+      _updateClock: function () {
+        var date = new Date();
+        var hour = date.getHours() % 12;
+        var minutes = '' + date.getMinutes();
+
+        hour = hour ? '' + hour : '12';
+
+        if (minutes.length === 1) {
+          minutes = '0' + minutes;
+        }
+
+        this.time = hour + ':' + minutes;
+        this.hour = hour
+        this.minutes = minutes;
+
+        requestAnimationFrame(this._updateClock);
+      }
+    });
+  </script>
+</dom-module>

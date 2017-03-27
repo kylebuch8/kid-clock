@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+    <title>Kid Clock</title>
+    <meta name="description" content="kid-clock description">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Varela+Round">
+    <script src="/bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=fetch"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/service-worker.js');
+      }
+    </script>
+    <style>
+      body {
+        margin: 0;
+        height: 100vh;
+      }
+    </style>
+    <link rel="import" href="/src/kc-app/kc-app.html">
+  </head>
+  <body>
+    <kc-app></kc-app>
+  </body>
+</html>
