@@ -1,0 +1,87 @@
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<!-- https://thenounproject.com/vectorsmarket/collection/fashion-and-clothes-vector-line-icons/?oq=clothing&cidx=102 -->
+
+<dom-module id="kc-outfit">
+  <template>
+    <style include="iron-flex">
+      :host {
+        display: block;
+      }
+
+      img {
+        width: 100px;
+      }
+
+      img[src="../../images/shorts.svg"] {
+        width: 80px;
+      }
+    </style>
+
+    <div class="layout vertical center">
+      <div>
+        <img src$="[[_computeTopClothing(highTemp, gender)]]">
+      </div>
+      <div>
+        <img src$="[[_computeBottomClothing(highTemp, gender)]]">
+      </div>
+      <h3>[[name]]</h3>
+    </div>
+  </template>
+  <script>
+    Polymer({
+      is: 'kc-outfit',
+
+      properties: {
+        name: String,
+        gender: String,
+        highTemp: String,
+        warmTemp: {
+          type: Number,
+          value: 70
+        },
+        coolTemp: {
+          type: Number,
+          value: 55
+        },
+        imagesPath: {
+          type: String,
+          value: '../../images/'
+        }
+      },
+
+      _computeTopClothing: function (highTemp, gender) {
+        var top = this.imagesPath;
+        highTemp = parseInt(highTemp, 10);
+
+        if (highTemp >= this.coolTemp) {
+          if (gender === 'male') {
+            top += 'tshirt-boy.svg';
+          } else {
+            top += 'tshirt-girl.svg';
+          }
+        } else {
+          top += 'longsleeves.svg';
+        }
+
+        return top;
+      },
+
+      _computeBottomClothing: function (highTemp, gender) {
+        var bottom = this.imagesPath;
+        highTemp = parseInt(highTemp, 10);
+
+        if (highTemp >= this.warmTemp) {
+          if (gender === 'male') {
+            bottom += 'shorts.svg';
+          } else {
+            bottom += 'skirt.svg';
+          }
+        } else {
+          bottom += 'pants.svg';
+        }
+
+        return bottom;
+      }
+    });
+  </script>
+</dom-module>

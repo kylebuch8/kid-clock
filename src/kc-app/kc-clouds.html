@@ -1,0 +1,59 @@
+<link rel="import" href="kc-cloud.html">
+
+<dom-module id="kc-clouds">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      kc-cloud {
+        position: absolute;
+        transform: translateY(20%);
+        /*animation: movecloud 60s linear infinite;*/
+        /*transform: translateX(-50%);*/
+      }
+
+      @keyframes movecloud {
+        from {
+          transform: translateX(-10%);
+        } to {
+          transform: translateX(110%);
+        }
+      }
+    </style>
+
+    <template is="dom-repeat" items="[[cloudsArray]]">
+      <kc-cloud style$="[[_computeStyle()]]"></kc-cloud>
+    </template>
+  </template>
+  <script>
+    Polymer({
+      is: 'kc-clouds',
+
+      properties: {
+        numClouds: {
+          type: Number,
+          observer: '_numCloudsChanged'
+        },
+        cloudsArray: Array
+      },
+
+      _numCloudsChanged: function (numClouds) {
+        if (!numClouds) {
+          return;
+        }
+
+        this.cloudsArray = Array(numClouds).fill(0);
+      },
+
+      _computeStyle: function () {
+        var min = 0;
+        var max = 550;
+        var randomDelay = Math.random() * (max - min) + min;
+
+        return 'transform: translateX(' + randomDelay + '%) translateY(20%); animation-delay: ' + randomDelay + 's;';
+      }
+    });
+  </script>
+</dom-module>

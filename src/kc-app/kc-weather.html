@@ -1,4 +1,5 @@
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="kc-outfit.html">
 
 <dom-module id="kc-weather">
   <template>
@@ -8,19 +9,39 @@
         font-family: 'Varela Round', sans-serif;
       }
 
+      :host > div {
+        width: 100%;
+      }
+
       .large {
         font-size: 60px;
       }
     </style>
 
-    <div>Current</div>
-    <div>[[currentObservation.weather]]</div>
-    <div class="large">[[currentTemperature]]&deg;</div>
-    <div>Forecast</div>
-    <div>[[forecast.simpleforecast.forecastday.0.conditions]]</div>
     <div class="layout horizontal">
-      <div>High: [[forecast.simpleforecast.forecastday.0.high.fahrenheit]]&deg;</div>
-      <div>Low: [[forecast.simpleforecast.forecastday.0.low.fahrenheit]]&deg;</div>
+      <kc-outfit
+        class="flex"
+        name="Cyrus"
+        gender="male"
+        high-temp="[[forecast.simpleforecast.forecastday.0.high.fahrenheit]]">
+      </kc-outfit>
+      <div class="layout vertical center center-justified">
+        <div>Current</div>
+        <div>[[currentObservation.weather]]</div>
+        <div class="large">[[currentTemperature]]&deg;</div>
+        <div>Forecast</div>
+        <div>[[forecast.simpleforecast.forecastday.0.conditions]]</div>
+        <div class="layout horizontal">
+          <div>High: [[forecast.simpleforecast.forecastday.0.high.fahrenheit]]&deg;&nbsp;</div>
+          <div>Low: [[forecast.simpleforecast.forecastday.0.low.fahrenheit]]&deg;</div>
+        </div>
+      </div>
+      <kc-outfit
+        class="flex"
+        name="Ramona"
+        gender="female"
+        high-temp="[[forecast.simpleforecast.forecastday.0.high.fahrenheit]]">
+      </kc-outfit>
     </div>
   </template>
   <script>
@@ -32,7 +53,7 @@
         city: String,
         apiUrl: {
           type: String,
-          value: 'http://api.wunderground.com/api/237c499a64ba2cec/'
+          value: 'https://api.wunderground.com/api/237c499a64ba2cec/'
         },
         currentObservation: Object,
         forecast: Object,

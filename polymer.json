@@ -3,7 +3,8 @@
   "shell": "src/kc-app/kc-app.html",
   "sources": [
     "bower.json",
-    "manifest.json"
+    "manifest.json",
+    "images/**/*"
   ],
   "includeDependencies": [
     "bower_components/webcomponentsjs/webcomponents-lite.min.js"

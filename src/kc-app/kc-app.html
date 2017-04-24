@@ -3,19 +3,103 @@
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="kc-clock.html">
 <link rel="import" href="kc-weather.html">
+<link rel="import" href="kc-stars.html">
+<link rel="import" href="kc-clouds.html">
+<link rel="import" href="kc-trees.html">
+
 <dom-module id="kc-app">
   <template>
     <style include="iron-flex">
       :host {
-        @apply(--layout-horizontal);
+        display: block;
         height: 100vh;
-        background: linear-gradient(#F4CD8B, #E7A365);
-        color: #333;
+        color: white;
+        text-shadow: 0px 1px 1px #666;
+      }
+
+      .container {
+        width: 100vw;
+        height: 100vh;
+        position: absolute;
+        z-index: 2;
+        top: 0;
+        left: 0;
+      }
+
+      :host.sunny {
+        background: linear-gradient(#4CA1AF, #C4E0E5);
+      }
+
+      :host.night {
+        background: linear-gradient(#152c3e, #37618a);
+      }
+
+      :host.dawn {
+        background: linear-gradient(#19547b, #ffd89b);
+      }
+
+      :host.dusk {
+        background: linear-gradient(#0B486B, #F56217);
+      }
+
+      :host.cloudy {
+        background: linear-gradient(#2c3e50, #bdc3c7);
+      }
+
+      #ground {
+        z-index: 2;
+        width: 100%;
+        height: 20%;
+        position: absolute;
+        bottom: 0;
+        background: #879759;
+      }
+
+      kc-stars {
+        position: absolute;
+        width: 100vw;
+        height: 100vh;
+        top: 0;
+        left: 0;
+        z-index: 1;
+      }
+
+      kc-trees {
+        width: 100%;
+        height: 130px;
+        z-index: 4;
+        position: absolute;
+        bottom: 20%;
+        margin-bottom: -100px;
+      }
+
+      kc-clouds {
+        width: 100vw;
+        height: 100vh;
       }
     </style>
 
-    <kc-clock class="flex layout vertical center center-justified" time="{{time}}" hour="{{hour}}" minutes="{{minutes}}" date="{{currentDateString}}"></kc-clock>
-    <kc-weather class="flex layout vertical center center-justified" id="weather" state="NC" city="Apex" current-date-string="{{currentDateString}}"></kc-weather>
+    <div class="container layout horizontal">
+      <kc-clock
+        class="flex layout vertical center center-justified"
+        time="{{time}}"
+        hour="{{hour}}"
+        minutes="{{minutes}}"
+        date="{{currentDateString}}">
+      </kc-clock>
+      <kc-weather
+        class="flex layout vertical center center-justified"
+        id="weather"
+        state="NC"
+        city="Apex"
+        current-date-string="{{currentDateString}}">
+      </kc-weather>
+    </div>
+
+    <svg id="ground"></svg>
+    <!-- <kc-stars></kc-stars> -->
+    <kc-clouds num-clouds="5"></kc-clouds>
+    <kc-trees></kc-trees>
   </template>
 
   <script>
