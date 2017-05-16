@@ -1,3 +1,5 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
 <dom-module id="kc-trees">
   <template>
     <style>
@@ -45,8 +47,10 @@
 
   </template>
   <script>
-    Polymer({
-      is: 'kc-trees'
-    });
+    class KcTrees extends Polymer.Element {
+      static get is() { return 'kc-trees'; }
+    }
+
+    customElements.define(KcTrees.is, KcTrees);
   </script>
 </dom-module>

@@ -1,3 +1,5 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
 <dom-module id="kc-clock">
   <template>
     <style>
@@ -15,34 +17,37 @@
     <div>[[date]]</div>
   </template>
   <script>
-    Polymer({
-      is: 'kc-clock',
+    class KcClock extends Polymer.Element {
+      static get is() { return 'kc-clock'; }
+      static get properties() {
+        return {
+          time: {
+            type: String,
+            notify: true
+          },
+          hour: {
+            type: String,
+            notify: true
+          },
+          minutes: {
+            type: String,
+            notify: true
+          },
+          date: String
+        };
+      }
 
-      properties: {
-        time: {
-          type: String,
-          notify: true
-        },
-        hour: {
-          type: String,
-          notify: true
-        },
-        minutes: {
-          type: String,
-          notify: true
-        },
-        date: String
-      },
+      constructor() {
+        super();
 
-      ready: function () {
         this._updateClock = this._updateClock.bind(this);
         requestAnimationFrame(this._updateClock);
-      },
+      }
 
-      _updateClock: function () {
-        var date = new Date();
-        var hour = date.getHours() % 12;
-        var minutes = '' + date.getMinutes();
+      _updateClock() {
+        let date = new Date();
+        let hour = date.getHours() % 12;
+        let minutes = '' + date.getMinutes();
 
         hour = hour ? '' + hour : '12';
 
@@ -56,6 +61,8 @@
 
         requestAnimationFrame(this._updateClock);
       }
-    });
+    }
+
+    customElements.define(KcClock.is, KcClock);
   </script>
 </dom-module>

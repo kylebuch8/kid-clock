@@ -1,4 +1,4 @@
-<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="kc-clock.html">
@@ -26,23 +26,23 @@
         left: 0;
       }
 
-      :host.sunny {
+      :host(.sunny) {
         background: linear-gradient(#4CA1AF, #C4E0E5);
       }
 
-      :host.night {
+      :host(.night) {
         background: linear-gradient(#152c3e, #37618a);
       }
 
-      :host.dawn {
+      :host(.dawn) {
         background: linear-gradient(#19547b, #ffd89b);
       }
 
-      :host.dusk {
+      :host(.dusk) {
         background: linear-gradient(#0B486B, #F56217);
       }
 
-      :host.cloudy {
+      :host(.cloudy) {
         background: linear-gradient(#2c3e50, #bdc3c7);
       }
 
@@ -103,27 +103,35 @@
   </template>
 
   <script>
-    Polymer({
-      is: 'kc-app',
+    class KcApp extends Polymer.Element {
+      static get is() { return 'kc-app'; }
+      static get properties() {
+        return {
+          updateInterval: {
+            type: Number,
+            value: 10
+          },
+          time: String,
+          hour: String,
+          minutes: {
+            type: String,
+            observer: '_minutesChanged'
+          }
+        };
+      }
 
-      properties: {
-        updateInterval: {
-          type: Number,
-          value: 10
-        },
-        time: String,
-        hour: String,
-        minutes: {
-          type: String,
-          observer: '_minutesChanged'
-        }
-      },
+      ready() {
+        super.ready();
+        this.$.weather.getCurrentConditions();
+      }
 
-      _minutesChanged: function (minutes) {
+      _minutesChanged(minutes) {
         if (minutes % this.updateInterval === 0) {
           this.$.weather.getCurrentConditions();
         }
       }
-    });
+    }
+
+    customElements.define(KcApp.is, KcApp);
   </script>
 </dom-module>

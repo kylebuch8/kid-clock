@@ -3,10 +3,22 @@
   "shell": "src/kc-app/kc-app.html",
   "sources": [
     "bower.json",
-    "manifest.json",
     "images/**/*"
   ],
-  "includeDependencies": [
-    "bower_components/webcomponentsjs/webcomponents-lite.min.js"
-  ]
+  "extraDependencies": [
+    "manifest.json",
+    "bower_components/webcomponentsjs/webcomponents-lite.js"
+  ],
+  "builds": [
+    {
+      "name": "unbundled",
+      "addServiceWorker": true,
+      "js": { "minify": true },
+      "css": { "minify": true },
+      "html": { "minify": true }
+    }
+  ],
+  "lint": {
+    "rules": ["polymer-2"]
+  }
 }

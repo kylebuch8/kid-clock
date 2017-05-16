@@ -1,3 +1,6 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymer/lib/utils/async.html">
+
 <dom-module id="kc-stars">
   <template>
     <style>
@@ -9,17 +12,19 @@
     <canvas id="sky"></canvas>
   </template>
   <script>
-    Polymer({
-      is: 'kc-stars',
+    class KcStars extends Polymer.Element {
+      static get is() { return 'kc-stars'; }
 
-      ready: function () {
-        this.async(function () {
-          var sky = this.$.sky;
+      ready() {
+        super.ready();
+
+        setTimeout(() => {
+          let sky = this.$.sky;
 
           sky.width = document.body.clientWidth;
           sky.height = document.body.clientHeight - 4;
 
-          if (sky.getContext){
+          if (sky.getContext) {
             var skyContext = sky.getContext("2d");
             var radius = 2;
 
@@ -38,6 +43,8 @@
           }
         }, 1);
       }
-    });
+    }
+
+    customElements.define(KcStars.is, KcStars);
   </script>
 </dom-module>

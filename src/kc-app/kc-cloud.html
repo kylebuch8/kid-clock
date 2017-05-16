@@ -1,3 +1,5 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
 <dom-module id="kc-cloud">
   <template>
     <style>
@@ -43,16 +45,18 @@
     </svg>
   </template>
   <script>
-    Polymer({
-      is: 'kc-cloud',
+    class KcCloud extends Polymer.Element {
+      static get is() { return 'kc-cloud'; }
 
-      _computeTransform: function () {
-        var min = 0.25;
-        var max = 1.5;
-        var randomScale = Math.random() * (max - min) + min;
+      _computeTransform() {
+        let min = 0.25;
+        let max = 1.5;
+        let randomScale = Math.random() * (max - min) + min;
 
         return 'scale( ' + randomScale + ')';
       }
-    });
+    }
+
+    customElements.define(KcCloud.is, KcCloud);
   </script>
 </dom-module>

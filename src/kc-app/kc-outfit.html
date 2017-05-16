@@ -1,3 +1,4 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <!-- https://thenounproject.com/vectorsmarket/collection/fashion-and-clothes-vector-line-icons/?oq=clothing&cidx=102 -->
 
@@ -28,29 +29,30 @@
     </div>
   </template>
   <script>
-    Polymer({
-      is: 'kc-outfit',
+    class KcOutfit extends Polymer.Element {
+      static get is() { return 'kc-outfit'; }
+      static get properties() {
+        return {
+          name: String,
+          gender: String,
+          highTemp: String,
+          warmTemp: {
+            type: Number,
+            value: 70
+          },
+          coolTemp: {
+            type: Number,
+            value: 55
+          },
+          imagesPath: {
+            type: String,
+            value: '../../images/'
+          }
+        };
+      }
 
-      properties: {
-        name: String,
-        gender: String,
-        highTemp: String,
-        warmTemp: {
-          type: Number,
-          value: 70
-        },
-        coolTemp: {
-          type: Number,
-          value: 55
-        },
-        imagesPath: {
-          type: String,
-          value: '../../images/'
-        }
-      },
-
-      _computeTopClothing: function (highTemp, gender) {
-        var top = this.imagesPath;
+      _computeTopClothing(highTemp, gender) {
+        let top = this.imagesPath;
         highTemp = parseInt(highTemp, 10);
 
         if (highTemp >= this.coolTemp) {
@@ -64,10 +66,10 @@
         }
 
         return top;
-      },
+      }
 
-      _computeBottomClothing: function (highTemp, gender) {
-        var bottom = this.imagesPath;
+      _computeBottomClothing(highTemp, gender) {
+        let bottom = this.imagesPath;
         highTemp = parseInt(highTemp, 10);
 
         if (highTemp >= this.warmTemp) {
@@ -82,6 +84,8 @@
 
         return bottom;
       }
-    });
-  </script>
+    }
+
+    customElements.define(KcOutfit.is, KcOutfit);
+    </script>
 </dom-module>
